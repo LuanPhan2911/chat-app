@@ -6,6 +6,9 @@ import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 
 type Variant = 'LOGIN'| 'REGISTER';
@@ -29,16 +32,53 @@ const AuthForm = () => {
             password:''
         }
     })
-    const onSubmit:SubmitHandler<FieldValues> =(data)=>{
-        if(variant==='LOGIN'){
-
-        }
+    const onSubmit:SubmitHandler<FieldValues> =async(data)=>{
+        setLoading(true);
         if (variant==='REGISTER') {
+           try {
+            await  axios.post('/api/register', data);
+           } catch (error) {
+                toast.error("Something went wrong!");
+           }
+        }
+        if(variant==='LOGIN'){
+            try {
+                let res=await signIn('credentials', {
+                    ...data,
+                    redirect:false
+                });
+                if(res?.error){
+                    toast.error("Invalid Credential!");
+                }
+                if(res?.ok){
+                    toast.success("Logged in!");
+                }
+            } catch (error) {
+                toast.error("Something went wrong!");
+            }
             
         }
+        setLoading(false);
+        
     }
-    const socialAction =(action:string)=>{
-
+    const socialAction =async(action:string)=>{
+        setLoading(true);
+        try {
+         let res= await signIn(action,{
+                redirect:false
+            });
+            console.log(res);
+              
+            if(res?.error){
+                toast.error("Invalid Credential!");
+            }
+            if(res?.ok){
+                toast.success("Logged in!");
+            }
+        } catch (error) {
+            toast.error("Something went wrong!"); 
+        }
+        setLoading(false)
     }
 
     return ( 
@@ -67,7 +107,7 @@ const AuthForm = () => {
                 type="password"
                 register={register}
                 errors={errors}/>
-            <Button fullWidth>
+            <Button fullWidth disabled={isLoading}>
                 {
                     variant==='LOGIN'? "Sign In":"Register"
                 }
@@ -84,6 +124,7 @@ const AuthForm = () => {
                 </div>
                 </div>
             </div>
+            </form>
             <div className="mt-6 flex gap-2">
                 <AuthSocialButton icon={BsGithub} onClick={()=>socialAction('github')}/>
                 <AuthSocialButton icon={BsGoogle} onClick={()=>socialAction('google')}/>
@@ -96,7 +137,6 @@ const AuthForm = () => {
                     }
                 </span>
             </div>
-            </form>
         </div>
        </div>
      );
