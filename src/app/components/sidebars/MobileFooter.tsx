@@ -15,7 +15,7 @@ const MobileFooter: FunctionComponent<MobileFooterProps> = () => {
   return (
     <div
       className="fixed flex justify-between items-center
-     w-full bottom-0 bg-white border-t-[1px] lg:hidden"
+     w-full bottom-0 bg-white border-t-[1px] lg:hidden z-50"
     >
       {routes.map((item) => {
         return (

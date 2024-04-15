@@ -1,3 +1,4 @@
+// "use client";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import DesktopSideBar from "./DesktopSideBar";
 import MobileFooter from "./MobileFooter";

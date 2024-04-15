@@ -45,6 +45,17 @@ const AuthForm = () => {
     if (variant === "REGISTER") {
       try {
         await axios.post("/api/register", data);
+        let res = await signIn("credentials", {
+          ...data,
+          redirect: false,
+        });
+        if (res?.error) {
+          toast.error("Invalid Credential!");
+        }
+        if (res?.ok) {
+          toast.success("Logged in!");
+          router.push("/users");
+        }
       } catch (error) {
         toast.error("Something went wrong!");
       }
