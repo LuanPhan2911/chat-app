@@ -39,6 +39,7 @@ const ConversationBox: FunctionComponent<ConversationBoxProps> = ({
       return false;
     }
     const seenArray = lastMessage.seen || [];
+
     return seenArray.filter((user) => user.email === userEmail).length === 0;
   }, [lastMessage, userEmail]);
   const lastMessageText = useMemo(() => {
@@ -55,7 +56,7 @@ const ConversationBox: FunctionComponent<ConversationBoxProps> = ({
       onClick={handleClick}
       className={clsx(
         `
-      w-full relative flex  items-center space-x-3 p-3
+      w-full relative flex  items-center space-x-2 p-2
       hover:bg-neutral-100 rounded-md transition cursor-pointer`,
         selected ? "bg-neutral-100" : "bg-white"
       )}
@@ -76,7 +77,7 @@ const ConversationBox: FunctionComponent<ConversationBoxProps> = ({
         <p
           className={clsx(
             `truncate text-sm`,
-            hasSeen ? "text-gray" : "text-black"
+            hasSeen ? "text-gray-800" : "text-black"
           )}
         >
           {lastMessageText}
