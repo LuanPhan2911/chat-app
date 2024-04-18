@@ -3,31 +3,31 @@ import clsx from "clsx";
 import React, { FunctionComponent } from "react";
 
 interface ButtonProps {
-    type?:'button'| 'submit'|'reset'| undefined,
-    fullWidth?:boolean,
-    children?: React.ReactNode,
-    onClick?:()=>void,
-    secondary?: boolean,
-    danger?:boolean,
-    disabled?:boolean
+  type?: "button" | "submit" | "reset" | undefined;
+  fullWidth?: boolean;
+  children?: React.ReactNode;
+  onClick?: () => void;
+  secondary?: boolean;
+  danger?: boolean;
+  disabled?: boolean;
 }
- 
-const Button: React.FC<ButtonProps> = (
-    {
-        children,
-        danger,
-        disabled,
-        fullWidth, 
-        secondary,
-        type,
-        onClick
-    }
-) => {
-    return ( 
-        <button 
-        type={type} 
-        disabled={disabled}
-        className={clsx(`
+
+const Button: React.FC<ButtonProps> = ({
+  children,
+  danger,
+  disabled,
+  fullWidth,
+  secondary,
+  type,
+  onClick,
+}) => {
+  return (
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+      className={clsx(
+        `
             flex
             justify-center
             rounded-md
@@ -39,14 +39,19 @@ const Button: React.FC<ButtonProps> = (
             focus-visible:outline-2
             focus-visible:outline-offset-2
             `,
-            disabled&& "opacity-50 cursor-default",
-            fullWidth&& "w-full",
-            secondary ?"text-gray-900": "text-white",
-            danger && "text-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600", 
-            !secondary && !danger && "bg-sky-500 hover:bg-sky-600 focus-visible:outline-sky-600"
-        )}
-        >{children}</button>
-     );
-}
- 
+        disabled && "opacity-50 cursor-default",
+        fullWidth && "w-full",
+        secondary ? " bg-gray-200" : "text-white",
+        danger &&
+          "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600",
+        !secondary &&
+          !danger &&
+          "bg-sky-500 hover:bg-sky-600 focus-visible:outline-sky-600"
+      )}
+    >
+      {children}
+    </button>
+  );
+};
+
 export default Button;

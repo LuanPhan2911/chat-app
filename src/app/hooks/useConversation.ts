@@ -7,11 +7,12 @@ export default function useConversation() {
     if (!params?.conversationId) {
       return "";
     }
-    return params?.conversationId;
+    return params?.conversationId as string;
   }, [params?.conversationId]);
   const isOpen = useMemo(() => {
     return !!conversationId;
   }, [conversationId]);
+
   return useMemo(() => {
     return {
       isOpen,
