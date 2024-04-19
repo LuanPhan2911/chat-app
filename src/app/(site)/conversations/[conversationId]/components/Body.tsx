@@ -22,7 +22,7 @@ const Body: FunctionComponent<BodyProps> = ({ initialMessages }) => {
       } catch (error) {}
     }
     makeSeen();
-  }, [conversationId]);
+  }, [conversationId, messages]);
 
   useEffect(() => {
     pusherClient.subscribe(conversationId);
